@@ -40,3 +40,11 @@ dfSelectedTeam = playerstats[(playerstats.Tm.isin(selectedTeam)) & (playerstats.
 st.header('Player Stats of Selected Team(s)')
 st.write('Data Dimension: ' + str(dfSelectedTeam.shape[0]) + ' rows and ' + str(dfSelectedTeam.shape[1]) + ' columns.')
 st.dataframe(dfSelectedTeam)
+
+def filedownload(df):
+    csv = df.to_csv(index=False)
+    b64 = base64.b64encode(csv.encode()).decode()  
+    href = f'<a href="data:file/csv;base64,{b64}" download="playerstats.csv">Download CSV File</a>'
+    return href
+
+st.markdown(filedownload(dfSelectedTeam), unsafe_allow_html=True)
